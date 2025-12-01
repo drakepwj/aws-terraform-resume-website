@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # or your deployment branch
+    paths:
+      - app.py
 
 jobs:
   deploy:
@@ -25,7 +27,7 @@ jobs:
 
       - name: Zip Lambda function
         run: |
-          zip -r function.zip .
+          zip -r function.zip app.py src/
 
       - name: Deploy to AWS Lambda
         uses: appleboy/lambda-action@master
