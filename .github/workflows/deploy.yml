@@ -1,0 +1,25 @@
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
+
+  - name: Set up Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: '3.11'
+
+  - name: Install dependencies
+    run: |
+      pip install -r requirements.txt
+
+  - name: Zip Lambda function
+    run: |
+      zip -r function.zip .
+
+  - name: Deploy to AWS Lambda
+    uses: appleboy/lambda-action@master
+    with:
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_region: us-west-2
+      function_name: VisitorCounterLambda
+      zip_file: function.zip
