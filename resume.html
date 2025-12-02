@@ -6,6 +6,13 @@
   <title>Drake Johnson – DevOps Engineer Resume</title>
   <link rel="stylesheet" href="style.css">
 </head>
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  toggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  });
+</script>
 <body>
   <button id="theme-toggle" aria-label="Toggle dark mode">🌓</button>
   <div class="container">
