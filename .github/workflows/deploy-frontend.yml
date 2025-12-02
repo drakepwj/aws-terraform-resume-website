@@ -7,7 +7,8 @@ on:
     paths:
       - resume.html
       - style.css
-
+  workflow_dispatch:
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
