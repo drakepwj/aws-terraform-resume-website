@@ -6,13 +6,6 @@
   <title>Drake Johnson – DevOps Engineer Resume</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<script>
-  const toggle = document.getElementById('theme-toggle');
-  toggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-  });
-</script>
 <body>
   <button id="theme-toggle" aria-label="Toggle dark mode">🌓</button>
   <div class="container">
@@ -21,7 +14,10 @@
     <p><em>Erie, CO 80516</em></p>
     <p>
       <a href="https://www.linkedin.com/in/drake-johnson-922b10160/">LinkedIn</a> |
-      <a href="https://drakepwj.click/">Portfolio</a>
+     
+     # this line links back to the current page, it's redundant 
+     # <a href="https://drakepwj.click/">Portfolio</a>
+      
     </p>
 
     <div class="section">
@@ -98,7 +94,14 @@
       <p>Visitor count: <span id="visitor-count">Loading...</span></p>
     </div>
   </div>
-
+  
+  <script>
+  const toggle = document.getElementById('theme-toggle');
+  toggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  });
+  </script>
   <script>
     fetch('https://m91lp3rpgb.execute-api.us-east-2.amazonaws.com/Prod/count')
       .then(response => response.json())
