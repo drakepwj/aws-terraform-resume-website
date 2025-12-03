@@ -1,0 +1,58 @@
+#SAM template for deploying DynamoDB, API, Lambda
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Visitor counter backend for Cloud Resume Challenge
+Resources:
+  VisitorCounterApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowMethods: '''GET,OPTIONS'''
+        AllowHeaders: '''Content-Type'''
+        AllowOrigin: '''*'''
+    Metadata:
+      SamResourceId: VisitorCounterApi
+  VisitorCounterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: VisitorCountTable
+      FunctionName: VisitorCounterFunction
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-pcdcrplibcfh/resume-backend/be5458028db21dd5e8bae5f735553520
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: VisitorCountTable
+      Events:
+        VisitorCounter:
+          Type: Api
+          Properties:
+            Path: /count
+            Method: get
+            RestApiId:
+              Ref: VisitorCounterApi
+    Metadata:
+      SamResourceId: VisitorCounterFunction
+  VisitorCountTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: VisitorCountTable
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+    Metadata:
+      SamResourceId: VisitorCountTable
+Outputs:
+  VisitorCounterAPI:
+    Description: API Gateway endpoint for visitor counter
+    Value:
+      Fn::Sub: https://${VisitorCounterApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/count
