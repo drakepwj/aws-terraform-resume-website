@@ -3,7 +3,7 @@ name: Deploy Lambda Function
 on:
   push:
     branches:
-      - main  # or your deployment branch
+      - main 
     paths:
       - app.py
 
@@ -20,10 +20,6 @@ jobs:
         with:
           python-version: '3.11'
 
-#  We only need boto3, os, and json which are already included in AWS Lambda's Python runtime
-#      - name: Install dependencies
-#        run: |
-#          pip install -r requirements.txt
 
       - name: Zip Lambda function
         run: |
