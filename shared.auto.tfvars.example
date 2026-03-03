@@ -1,0 +1,3 @@
+region         = "us-east-1"
+domain         = "web.site"
+hosted_zone_id = "z0000000000000"
