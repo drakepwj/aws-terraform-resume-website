@@ -21,7 +21,7 @@ provider "aws" {
 
 # S3 bucket for static site (private)
 resource "aws_s3_bucket" "site_bucket" {
-  bucket = "resume-${var.domain_name}"
+  bucket = "resume-${var.domain}"
 }
 
 resource "aws_s3_bucket_ownership_controls" "site_bucket" {
@@ -52,7 +52,7 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 # ACM certificate for drakepwj.click (in us-east-1)
 resource "aws_acm_certificate" "cert" {
   provider          = aws.us_east_1
-  domain_name       = var.domain_name
+  domain       = var.domain
   validation_method = "DNS"
 
   lifecycle {
@@ -64,7 +64,7 @@ resource "aws_acm_certificate" "cert" {
 resource "aws_route53_record" "cert_validation" {
   for_each = {
     for dvo in aws_acm_certificate.cert.domain_validation_options :
-    dvo.domain_name => {
+    dvo.domain => {
       name   = dvo.resource_record_name
       type   = dvo.resource_record_type
       record = dvo.resource_record_value
@@ -84,7 +84,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   default_root_object = "resume.html"
 
   origin {
-    domain_name              = aws_s3_bucket.site_bucket.bucket_regional_domain_name
+    domain                   = aws_s3_bucket.site_bucket.bucket_regional_domain_name
     origin_id                = "s3-origin"
     origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
   }
@@ -115,7 +115,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     minimum_protocol_version = "TLSv1.2_2021"
   }
 
-  aliases = [var.domain_name]
+  aliases = [var.domain]
 }
 
 # Allow CloudFront to read from S3
@@ -145,11 +145,11 @@ resource "aws_s3_bucket_policy" "site_bucket" {
 # Route53 alias to CloudFront
 resource "aws_route53_record" "root_alias" {
   zone_id = var.hosted_zone_id
-  name    = var.domain_name
+  name    = var.domain
   type    = "A"
 
   alias {
-    name                   = aws_cloudfront_distribution.cdn.domain_name
+    name                   = aws_cloudfront_distribution.cdn.domain
     zone_id                = aws_cloudfront_distribution.cdn.hosted_zone_id
     evaluate_target_health = false
   }

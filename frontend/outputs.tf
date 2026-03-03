@@ -3,9 +3,9 @@ output "site_bucket_name" {
 }
 
 output "cloudfront_domain_name" {
-  value = aws_cloudfront_distribution.cdn.domain_name
+  value = aws_cloudfront_distribution.cdn.domain
 }
 
 output "site_url" {
-  value = "https://${var.domain_name}"
+  value = "https://${var.domain}"
 }

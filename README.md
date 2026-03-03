@@ -40,6 +40,9 @@ Have this:
 A registered domain
 A Route 53 hosted zone for that domain
 
+Do this:
+Clone the repository
+
 === 2.Configure your variables===
 
 Copy shared.auto.tfvars.example to shared.auto.tfvars and fill in your values
@@ -50,4 +53,35 @@ hosted_zone_id = "<your-hosted-zone-id>"
 
 *Resources like CloudFront, OAC, and ACM operate globally but only use us-east-1 as their region. They will not be affected by the region you input here and will deploy to us-east-1 with Terraform.
 
-=== 3.
+=== 3.Deploy ===
+
+The frontend and backend directories deploy independently.
+From the resume/frontend dir run:
+
+terraform init
+
+terraform apply
+
+and again in resume/backend
+
+terraform init
+
+terraform apply
+
+Terraform will create the frontend and backend resources, your resume website is now live.
+
+=== 4.Enable GitHub Actions ===
+
+This step is optional, it is for users who want to automate the deployment of updates to the resume project.
+
+The repository includes a GitHub Actions workflow that runs Terraform automatically whenever changes are pushed. To enable it:
+
+In your GitHub repository, go to Settings → Secrets and variables → Actions.
+
+Add the following repository secrets:
+
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+
+Commit and push any change to the repository.
+This will trigger the workflow and apply the Terraform configuration for both the frontend and backend.
