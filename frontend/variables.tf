@@ -1,14 +1,11 @@
 variable "region" {
-  type    = string
-  default = "us-east-1"
+  type = string
 }
 
 variable "domain" {
-  type    = string
-  default = "drakepwj.click"
+  type = string
 }
 
 variable "hosted_zone_id" {
-  type        = string
-  description = "Route53 hosted zone ID for drakepwj.click"
+  type = string
 }

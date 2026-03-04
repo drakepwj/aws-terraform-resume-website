@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - resume.html
-      - style.css
+      - frontend/resume.html
+      - frontend/style.css
   workflow_dispatch:
   
 jobs:

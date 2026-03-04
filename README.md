@@ -45,7 +45,7 @@ Clone the repository
 
 === 2.Configure your variables===
 
-Copy shared.auto.tfvars.example to shared.auto.tfvars and fill in your values
+Copy variables.tf.example to variables.tf and fill in your values
 
 region         = "<your-aws-region>"
 domain         = "<your-domain>"
@@ -55,14 +55,7 @@ hosted_zone_id = "<your-hosted-zone-id>"
 
 === 3.Deploy ===
 
-The frontend and backend directories deploy independently.
-From the resume/frontend dir run:
-
-terraform init
-
-terraform apply
-
-and again in resume/backend
+Run these two to deploy:
 
 terraform init
 

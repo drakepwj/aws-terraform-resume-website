@@ -9,16 +9,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = var.region
-}
-
-# CloudFront + ACM must use us-east-1
-provider "aws" {
-  alias  = "us_east_1"
-  region = "us-east-1"
-}
-
 # S3 bucket for static site (private)
 resource "aws_s3_bucket" "site_bucket" {
   bucket = "resume-${var.domain}"
@@ -52,8 +42,9 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 # ACM certificate for drakepwj.click (in us-east-1)
 resource "aws_acm_certificate" "cert" {
   provider          = aws.us_east_1
-  domain       = var.domain
+  domain_name       = var.domain
   validation_method = "DNS"
+  key_algorithm     = "RSA_2048"
 
   lifecycle {
     create_before_destroy = true
@@ -64,7 +55,7 @@ resource "aws_acm_certificate" "cert" {
 resource "aws_route53_record" "cert_validation" {
   for_each = {
     for dvo in aws_acm_certificate.cert.domain_validation_options :
-    dvo.domain => {
+    dvo.domain_name => {
       name   = dvo.resource_record_name
       type   = dvo.resource_record_type
       record = dvo.resource_record_value
@@ -78,13 +69,21 @@ resource "aws_route53_record" "cert_validation" {
   records = [each.value.record]
 }
 
+
+# ACM Cert validation
+resource "aws_acm_certificate_validation" "cert_validation" {
+  provider                = aws.us_east_1
+  certificate_arn         = aws_acm_certificate.cert.arn
+  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
+}
+
 # CloudFront distribution
 resource "aws_cloudfront_distribution" "cdn" {
   enabled             = true
   default_root_object = "resume.html"
 
   origin {
-    domain                   = aws_s3_bucket.site_bucket.bucket_regional_domain_name
+    domain_name              = aws_s3_bucket.site_bucket.bucket_regional_domain_name
     origin_id                = "s3-origin"
     origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
   }
@@ -149,14 +148,9 @@ resource "aws_route53_record" "root_alias" {
   type    = "A"
 
   alias {
-    name                   = aws_cloudfront_distribution.cdn.domain
+    name                   = aws_cloudfront_distribution.cdn.domain_name
     zone_id                = aws_cloudfront_distribution.cdn.hosted_zone_id
     evaluate_target_health = false
   }
 }
 
-# ACM Cert validation
-resource "aws_acm_certificate_validation" "cert_validation" {
-  certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
-}

@@ -9,10 +9,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = var.region
-}
-
 resource "aws_dynamodb_table" "visitor_count" {
   name         = "VisitorCountTable"
   billing_mode = "PAY_PER_REQUEST"
