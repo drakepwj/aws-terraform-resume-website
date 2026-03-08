@@ -3,6 +3,9 @@
 ---
 
 # =============== RESOURCES ===============
+![Cloud Architecture](./architecture.png)
+
+=== DOMAIN PREREQUISITES ===
 
 ## DOMAIN PREREQUISITES
 
@@ -35,8 +38,6 @@ These are not provisioned through Terraform because they require up‑front cost
 - Lambda Permission — allows API Gateway to invoke the function
 
 ---
-
-# =============== END RESOURCES ===============
 
 # =============== SETUP ===============
 
