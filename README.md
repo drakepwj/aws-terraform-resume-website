@@ -1,105 +1,138 @@
-This is a simple cloud project for deploying a resume website through AWS resources using Terraform and utiliziing GitHub Actions for CI/DC.
+## This is a simple cloud project for deploying a resume website using AWS resources managed with Terraform and updated automatically using GitHub Actions for CI/CD.
 
-=============== RESOURCES ===============
+---
 
-=== DOMAIN PREREQUISITES ===
+# =============== RESOURCES ===============
 
-This project requires a registered Domain with an AWS Route 53 hosted zone. These resources are not provisioned through terraform because they require up-front costs and manual creation of the domain name.
+## DOMAIN PREREQUISITES
 
+This project requires:
 
-=== FRONTEND ARCHITECTURE, TERRAFORM-MANAGED ===
+- A registered domain
+- A Route 53 hosted zone for that domain
 
-S3 Bucket - set to private, holds the website files
-OAC - allows CloudFront to sign requests to S3 bucket for verification
-CloudFront CDN - distributes the website
-ACM - certificate to enable HTTPS on CloudFront
-Route 53 Records - DNS records, connects the certificate, website, and CloudFront
-Bucket Policy - allows only CloudFront to read data from the bucket
+These are not provisioned through Terraform because they require up‑front costs and manual creation.
 
-=== BACKEND ARCHITECTURE, TERRAFORM-MANAGED ===
+---
 
-Lambda Function - Update the visitor count by 1 and returns new value
-IAM Role & Policy - grants Lambda permission to read and write to DynamoDB
-DynamoDB Table - Stores the visitor count
-API Gateway - a public HTTPS endpoint that allows the frontend to call lambda functions
-API->Lambda permission - explicit permission for the API call to the specific lambda function
+## FRONTEND ARCHITECTURE (Terraform‑Managed)
 
-=============== END RESOURCES ===============
+- S3 Bucket — private, stores the website files
+- Origin Access Control (OAC) — allows CloudFront to securely access the S3 bucket
+- CloudFront CDN — serves the website globally
+- ACM Certificate — enables HTTPS for CloudFront
+- Route 53 Records — DNS records connecting the domain, CloudFront, and ACM validation
+- Bucket Policy — restricts S3 access so only CloudFront can read objects
 
-=============== SETUP ===============
+---
 
-This project uses Terraform to deploy both the frontend (S3 + CloudFront + ACM + Route 53) and backend (Lambda + API Gateway). To run it in your own AWS account, you only need to provide three values: your AWS region, your domain name, and your Route 53 Hosted Zone ID.
+## BACKEND ARCHITECTURE (Terraform‑Managed)
 
-=== 1.Prerequisites ===
+- Lambda Function — increments and returns the visitor count
+- IAM Role & Policy — grants Lambda read/write access to DynamoDB
+- DynamoDB Table — stores the visitor count
+- API Gateway — public HTTPS endpoint for the frontend to call the Lambda
+- Lambda Permission — allows API Gateway to invoke the function
 
-Install these and configure your credentials:
+---
 
-AWS Cli
+# =============== END RESOURCES ===============
 
-Terraform
+# =============== SETUP ===============
 
-Have this:
+This project uses Terraform to deploy both the frontend (S3 + CloudFront + ACM + Route 53) and backend (Lambda + API Gateway).  
+To deploy it in your own AWS account, you only need to provide:
 
-A registered domain
+- Your AWS region
+- Your domain name
+- Your Route 53 hosted zone ID
 
-A Route 53 hosted zone for that domain
+---
+
+## 1. Prerequisites
+
+Install and configure:
+
+- AWS CLI
+- Terraform
+
+Have ready:
+
+- A registered domain
+- A Route 53 hosted zone for that domain
 
 Do this:
 
-Clone the repository
+- Clone the repository
 
-=== 2.Configure your variables===
+---
 
-Copy variables.tf.example to variables.tf and fill in your values
+## 2. Configure Your Variables
 
-region         = "<your-aws-region>"
-domain         = "<your-domain>"
+Copy variables.tf.example → variables.tf and fill in:
+
+region = "<your-aws-region>"
+domain = "<your-domain>"
 hosted_zone_id = "<your-hosted-zone-id>"
 
-*Resources like CloudFront, OAC, and ACM operate globally but only use us-east-1 as their region. They will not be affected by the region you input here and will deploy to us-east-1 with Terraform.
+Note:
+CloudFront, OAC, and ACM are global services but must be deployed in us-east-1. Terraform handles this automatically; your chosen region only affects regional services like Lambda, API Gateway, and DynamoDB.
 
-=== 3.Deploy ===
+---
 
-Run these two to deploy:
+## 3. Deploy
+
+Run:
 
 terraform init
-
 terraform apply
 
-Terraform will create the frontend and backend resources, your resume website is now live.
+Terraform will create all frontend and backend resources.
+Your resume website will now be live.
 
-=== 4.Enable GitHub Actions ===
+---
 
-This step is optional, it is for users who want to automate the deployment of updates to the resume project.
+## 4. Enable GitHub Actions (Optional)
 
-The repository includes a GitHub Actions workflow that pushes changes to resume.html and style.css automatically whenever changes are pushed. To enable it:
+This step enables automatic deployment of website updates.
 
-In your GitHub repository, go to Settings → Secrets and variables → Actions.
+The included GitHub Actions workflow uploads updated resume.html and style.css to the S3 bucket whenever you push changes.
 
-Add the following repository secrets:
+To enable:
 
+1. In your GitHub repo, go to Settings → Secrets and variables → Actions
+2. Add:
 
-AWS_ACCESS_KEY_ID
+   - AWS_ACCESS_KEY_ID
+   - AWS_SECRET_ACCESS_KEY
 
-AWS_SECRET_ACCESS_KEY
+3. Commit and push any change to the repository
 
-Commit and push any change to the repository.
+This triggers the workflow and updates the website files.
 
-This will trigger the workflow and apply the changes for resume.html and style.css.
+IMPORTANT:
+GitHub Actions does not run Terraform.
+It only uploads the website files to S3.
+Infrastructure changes still require running Terraform manually.
 
-THIS WILL NOT RE-DEPLOY ANY INFRSTRUCTURE WITH TERRAFORM, IT WILL ONLY PUSH THE WEBSITE FILES "resume.html" AND "style.css" TO THE S3 BUCKET!!!
+---
 
+# =============== DESTROY / RE‑DEPLOY ===============
 
-=============== END SETUP  ===============
+To redeploy the entire project from scratch:
 
-=============== DESTROY/RE-DEPLOY  ===============
-
-To re-deploy the project with Terraform you must first empty the S3 bucket:
+### 1. Empty the S3 bucket
 
 aws s3 rm s3://resume-YOURSITE.DOMAIN --recursive
 
-then run:
+If versioning is enabled, you may also need to delete object versions.
+
+### 2. Destroy the infrastructure
 
 terraform destroy
 
-All of the resources deployed through Terraform have usage-based cost plans, so destroying and re-applying won't incur additional charges.
+### 3. Re‑deploy
+
+terraform apply
+
+All resources in this project use usage‑based pricing, so destroying and re‑applying does not incur additional fixed costs.
