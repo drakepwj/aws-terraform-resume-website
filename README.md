@@ -1,6 +1,6 @@
 This is a simple cloud project for deploying a resume website through AWS resources using Terraform and utiliziing GitHub Actions for CI/DC.
 
-===== RESOURCES =====
+=============== RESOURCES ===============
 
 === DOMAIN PREREQUISITES ===
 
@@ -24,23 +24,28 @@ DynamoDB Table - Stores the visitor count
 API Gateway - a public HTTPS endpoint that allows the frontend to call lambda functions
 API->Lambda permission - explicit permission for the API call to the specific lambda function
 
-===== END RESOURCES =====
+=============== END RESOURCES ===============
 
-===== SETUP =====
+=============== SETUP ===============
 
 This project uses Terraform to deploy both the frontend (S3 + CloudFront + ACM + Route 53) and backend (Lambda + API Gateway). To run it in your own AWS account, you only need to provide three values: your AWS region, your domain name, and your Route 53 Hosted Zone ID.
 
 === 1.Prerequisites ===
 
 Install these and configure your credentials:
+
 AWS Cli
+
 Terraform
 
 Have this:
+
 A registered domain
+
 A Route 53 hosted zone for that domain
 
 Do this:
+
 Clone the repository
 
 === 2.Configure your variables===
@@ -67,14 +72,34 @@ Terraform will create the frontend and backend resources, your resume website is
 
 This step is optional, it is for users who want to automate the deployment of updates to the resume project.
 
-The repository includes a GitHub Actions workflow that runs Terraform automatically whenever changes are pushed. To enable it:
+The repository includes a GitHub Actions workflow that pushes changes to resume.html and style.css automatically whenever changes are pushed. To enable it:
 
 In your GitHub repository, go to Settings → Secrets and variables → Actions.
 
 Add the following repository secrets:
 
+
 AWS_ACCESS_KEY_ID
+
 AWS_SECRET_ACCESS_KEY
 
 Commit and push any change to the repository.
-This will trigger the workflow and apply the Terraform configuration for both the frontend and backend.
+
+This will trigger the workflow and apply the changes for resume.html and style.css.
+
+THIS WILL NOT RE-DEPLOY ANY INFRSTRUCTURE WITH TERRAFORM, IT WILL ONLY PUSH THE WEBSITE FILES "resume.html" AND "style.css" TO THE S3 BUCKET!!!
+
+
+=============== END SETUP  ===============
+
+=============== DESTROY/RE-DEPLOY  ===============
+
+To re-deploy the project with Terraform you must first empty the S3 bucket:
+
+aws s3 rm s3://resume-YOURSITE.DOMAIN --recursive
+
+then run:
+
+terraform destroy
+
+All of the resources deployed through Terraform have usage-based cost plans, so destroying and re-applying won't incur additional charges.
