@@ -18,3 +18,4 @@ __pycache__/
 # Ignore OS-specific junk
 .DS_Store
 Thumbs.db
+*.swp
