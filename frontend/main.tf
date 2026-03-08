@@ -154,3 +154,17 @@ resource "aws_route53_record" "root_alias" {
   }
 }
 
+# Rewrite GitHub Actions Workflow with your domain
+resource "null_resource" "update_workflow" {
+  triggers = {
+    always = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      sed -i 's|AWS_S3_BUCKET:.*|AWS_S3_BUCKET: resume-${var.domain}|' ${path.module}/../.github/workflows/deploy-frontend.yml
+      sed -i 's|AWS_REGION:.*|AWS_REGION: ${var.region}|g' ${path.module}/../.github/workflows/deploy-frontend.yml
+      sed -i 's|--distribution-id [A-Z0-9]*|--distribution-id ${aws_cloudfront_distribution.cdn.id}|' ${path.module}/../.github/workflows/deploy-frontend.yml
+    EOT
+  }
+}

@@ -88,7 +88,11 @@ Run:
 terraform init
 terraform apply
 
-Terraform will create all frontend and backend resources.
+Terraform will create all frontend and backend resources, however the S3 bucket will still be empty. To push the resume.html and style.css simply push an empty commit to GitHub:
+
+git commit --allow-empty -m "trigger deploy"
+git push
+
 Your resume website will now be live.
 
 ---
