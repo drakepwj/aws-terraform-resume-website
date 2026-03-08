@@ -109,7 +109,7 @@ Network Engineer | Cloud & DevOps Operations Specialist with 6+ years of experie
   });
   </script>
   <script>
-    fetch('https://m91lp3rpgb.execute-api.us-east-2.amazonaws.com/Prod/count')
+    fetch(`${VISITOR_API_URL}/count`)
       .then(response => response.json())
       .then(data => {
         document.getElementById('visitor-count').textContent = data.count;
