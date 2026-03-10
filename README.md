@@ -1,4 +1,4 @@
-## This is a simple cloud project for deploying a resume website using AWS resources managed with Terraform and updated automatically using GitHub Actions for CI/CD.
+## A fully automated cloud deployment project using Terraform, AWS Lambda, API Gateway, DynamoDB, and GitHub Actions to provision, update, and maintain a multi‑component application: a cloud-hosted resume.
 
 ---
 
