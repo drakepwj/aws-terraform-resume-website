@@ -9,15 +9,14 @@ provider "aws" {
 
 module "frontend" {
   source = "./frontend"
-
   providers = {
     aws           = aws
     aws.us_east_1 = aws.us_east_1
   }
-
   region         = var.region
   domain         = var.domain
   hosted_zone_id = var.hosted_zone_id
+  visitor_api_url = module.backend.visitor_counter_api_url
 }
 
 module "backend" {

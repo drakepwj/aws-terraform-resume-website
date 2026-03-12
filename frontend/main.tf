@@ -159,12 +159,15 @@ resource "null_resource" "update_workflow" {
   triggers = {
     always = timestamp()
   }
-
   provisioner "local-exec" {
     command = <<EOT
       sed -i 's|AWS_S3_BUCKET:.*|AWS_S3_BUCKET: resume-${var.domain}|' ${path.module}/../.github/workflows/deploy-frontend.yml
       sed -i 's|AWS_REGION:.*|AWS_REGION: ${var.region}|g' ${path.module}/../.github/workflows/deploy-frontend.yml
       sed -i 's|--distribution-id [A-Z0-9]*|--distribution-id ${aws_cloudfront_distribution.cdn.id}|' ${path.module}/../.github/workflows/deploy-frontend.yml
+      sed "s|\${VISITOR_API_URL}|${var.visitor_api_url}|g" ${path.module}/counter.js > /tmp/counter.js
+      aws s3 cp /tmp/counter.js s3://resume-${var.domain}/counter.js
+      aws s3 cp ${path.module}/resume.html s3://resume-${var.domain}/resume.html
+      aws s3 cp ${path.module}/style.css s3://resume-${var.domain}/style.css
     EOT
   }
 }
