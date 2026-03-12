@@ -115,7 +115,7 @@ resource "aws_lambda_permission" "api_invoke" {
 
 resource "aws_apigatewayv2_stage" "prod" {
   api_id      = aws_apigatewayv2_api.http_api.id
-  name        = "prod"
+  name        = "$default"
   auto_deploy = true
 }
 
