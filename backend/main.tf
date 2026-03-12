@@ -86,6 +86,10 @@ resource "aws_lambda_function" "visitor_counter" {
 resource "aws_apigatewayv2_api" "http_api" {
   name          = "visitor-counter-api"
   protocol_type = "HTTP"
+  cors_configuration {
+    allow_origins = ["https://${var.domain}"]
+    allow_methods = ["GET"]
+  }
 }
 
 resource "aws_apigatewayv2_integration" "lambda_integration" {

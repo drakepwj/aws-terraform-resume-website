@@ -1,4 +1,4 @@
-    fetch(`VISITOR_API_URL/count`)
+    fetch(`VISITOR_API_URL`)
       .then(response => response.json())
       .then(data => {
         document.getElementById('visitor-count').textContent = data.count;
