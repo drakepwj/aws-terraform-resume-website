@@ -72,9 +72,11 @@ Do this:
 
 Copy variables.tf.example → variables.tf and fill in:
 
-region = "<your-aws-region>"
-domain = "<your-domain>"
-hosted_zone_id = "<your-hosted-zone-id>"
+`region = "<your-aws-region>"`
+
+`domain = "<your-domain>"`
+
+`hosted_zone_id = "<your-hosted-zone-id>"`
 
 Note:
 CloudFront, OAC, and ACM are global services but must be deployed in us-east-1. Terraform handles this automatically; your chosen region only affects regional services like Lambda, API Gateway, and DynamoDB.
