@@ -2,10 +2,8 @@
 
 ---
 
-# =============== RESOURCES ===============
+# RESOURCES 
 ![Cloud Architecture](./architecture.png)
-
-=== DOMAIN PREREQUISITES ===
 
 ## DOMAIN PREREQUISITES
 
@@ -20,26 +18,28 @@ These are not provisioned through Terraform because they require up‑front cost
 
 ## FRONTEND ARCHITECTURE (Terraform‑Managed)
 
-- S3 Bucket — private, stores the website files
-- Origin Access Control (OAC) — allows CloudFront to securely access the S3 bucket
-- CloudFront CDN — serves the website globally
-- ACM Certificate — enables HTTPS for CloudFront
-- Route 53 Records — DNS records connecting the domain, CloudFront, and ACM validation
-- Bucket Policy — restricts S3 access so only CloudFront can read objects
+- S3 Bucket - private storage for website files
+- Origin Access Control (OAC) - allows CloudFront to securely access the S3 bucket
+- CloudFront CDN - serves the website globally
+- ACM Certificate - enables HTTPS for CloudFront
+- Route 53 Records - DNS records connecting the domain, CloudFront, and ACM validation
+- Bucket Policy - restricts S3 access so only CloudFront can read objects
+- Dynamic URL Injection - Terraform writes the API and CloudFront URLs into the frontend files and syncs them to S3 so the site always references the correct resources
+
 
 ---
 
 ## BACKEND ARCHITECTURE (Terraform‑Managed)
 
-- Lambda Function — increments and returns the visitor count
-- IAM Role & Policy — grants Lambda read/write access to DynamoDB
-- DynamoDB Table — stores the visitor count
-- API Gateway — public HTTPS endpoint for the frontend to call the Lambda
-- Lambda Permission — allows API Gateway to invoke the function
+- Lambda Function - increments and returns the visitor count
+- IAM Role & Policy - grants Lambda read/write access to DynamoDB
+- DynamoDB Table - stores the visitor count
+- API Gateway - public HTTPS endpoint for the frontend to call the Lambda
+- Lambda Permission - allows API Gateway to invoke the function
 
 ---
 
-# =============== SETUP ===============
+# SETUP
 
 This project uses Terraform to deploy both the frontend (S3 + CloudFront + ACM + Route 53) and backend (Lambda + API Gateway).  
 To deploy it in your own AWS account, you only need to provide:
@@ -88,10 +88,7 @@ Run:
 terraform init
 terraform apply
 
-Terraform will create all frontend and backend resources, however the S3 bucket will still be empty. To push the resume.html and style.css simply push an empty commit to GitHub:
-
-git commit --allow-empty -m "trigger deploy"
-git push
+Terraform will create all frontend and backend resources. It will use AWS CLI to copy resume.html, style.css, and counter.js to the S# bucket. It will also push the API URL, region, and domain name to their respective files for GitHub Actions.
 
 Your resume website will now be live.
 
@@ -122,7 +119,7 @@ Infrastructure changes still require running Terraform manually.
 
 ---
 
-# =============== DESTROY / RE‑DEPLOY ===============
+# DESTROY / RE‑DEPLOY
 
 To redeploy the entire project from scratch:
 
