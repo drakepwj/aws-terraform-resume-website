@@ -6,6 +6,16 @@ on:
       - main
     paths:
       - backend/app.py
+  workflow_dispatch:
+
+# Keyless AWS auth: the job assumes an IAM role through GitHub's OIDC provider (see ci.tf).
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: us-west-2
+  LAMBDA_FUNCTION: VisitorCounterFunction-v2
 
 jobs:
   deploy:
@@ -15,21 +25,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          python-version: '3.11'
+          role-to-arn: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
 
-
-      - name: Zip Lambda function
+      - name: Package Lambda function
         run: |
-          zip -r function.zip app.py src/
+          cd backend
+          zip ../function.zip app.py
 
       - name: Deploy to AWS Lambda
-        uses: appleboy/lambda-action@master
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: us-west-2
-          function_name: VisitorCounterFunction
-          zip_file: function.zip
+        run: |
+          aws lambda update-function-code \
+            --function-name "${LAMBDA_FUNCTION}" \
+            --zip-file fileb://function.zip

@@ -126,3 +126,7 @@ resource "aws_apigatewayv2_stage" "prod" {
 output "visitor_counter_api_url" {
   value = "${aws_apigatewayv2_api.http_api.api_endpoint}/count"
 }
+
+output "lambda_function_arn" {
+  value = aws_lambda_function.visitor_counter.arn
+}

@@ -2,6 +2,14 @@ output "site_bucket_name" {
   value = aws_s3_bucket.site_bucket.id
 }
 
+output "bucket_arn" {
+  value = aws_s3_bucket.site_bucket.arn
+}
+
+output "distribution_arn" {
+  value = aws_cloudfront_distribution.cdn.arn
+}
+
 output "cloudfront_domain_name" {
   value = aws_cloudfront_distribution.cdn.domain_name
 }
