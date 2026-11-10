@@ -3,36 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drake Johnson – Network & Infrastructure Engineer Resume</title>
+  <title>Drake Johnson – Cloud Engineer Resume</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <button id="theme-toggle" aria-label="Toggle dark mode">🌓</button>
   <div class="container">
     <h1>Drake Johnson</h1>
-    <p><strong>Network & Infrastructure Engineer</strong></p>
+    <p><strong>Cloud Engineer</strong></p>
     <p>
-      <a href="https://www.linkedin.com/in/drake-johnson-922b10160/">LinkedIn</a> | 
+      <a href="https://www.linkedin.com/in/drake-johnson-922b10160/">LinkedIn</a> |
       <a href="https://github.com/drakepwj">GitHub Projects</a>
     </p>
 
    <div class="section">
   <h2>Profile</h2>
   <p>
-    Network &amp; Infrastructure Engineer with 6+ years operating and troubleshooting distributed infrastructure across 150+ remote sites in 24/7, SLA-driven environments. Hands-on background in transport and physical-layer operations — RF / fixed-wireless systems, transceivers, cabling, and L1&ndash;L3 fault isolation — with strong instincts for diagnosing hardware faults, isolating them methodically, and driving them to resolution. Experienced in incident triage and escalation, RMA processing and vendor coordination, and the documentation discipline that keeps operations reliable: runbooks, SOPs, network diagrams, and asset records. Solid routing/switching fundamentals (Cisco, Juniper), packet capture and analysis (Wireshark), and DNS/DHCP/VPN troubleshooting. Additional depth in cloud and automation (AWS-certified, Terraform, GitHub Actions) reflecting a track record of ramping quickly on new technical domains&mdash;including a B.S. in Cloud Computing earned while working full-time, alongside three AWS certifications and CompTIA Network+ and Security+.
+    Cloud and infrastructure engineer with 10+ years in IT operations, currently owning P1 incidents on a hyperscale global fiber backbone. AWS-certified (Developer, SysOps Administrator, Solutions Architect Associate) with a B.S. in Cloud Computing and hands-on Terraform and GitHub Actions CI/CD experience from personal projects. Background in identity and access management, system hardening, monitoring, and operational documentation across 150+ distributed sites.
   </p>
 </div>
 
 <div class="section">
   <h2>Skills</h2>
   <ul>
-  <li><strong>NETWORK OPERATIONS & TRANSPORT:</strong> L1-L3 fault isolation | RF / fixed-wireless transport (base-stations, transceivers, physical-layer troubleshooting across 150+ sites) | Optics, cabling & transceiver diagnostics | Routing fundamentals (OSPF, BGP) | VLANs | NAT | DHCP | DNS | VPN/IPSec troubleshooting | Packet capture & analysis (Wireshark) | Cisco | Juniper | MikroTik | Network monitoring, alert response, performance validation</li>
-  <li><strong>NOC & INCIDENT RESPONSE:</strong> 24/7 on-call across 150+ live sites | Incident triage, fault isolation & root-cause analysis | Escalation & SLA-driven ticket ownership | RMA processing & vendor coordination | Backup/restore & DR-aligned practices | SOPs, runbooks, network diagrams, asset documentation</li>
-  <li><strong>SYSTEMS & VIRTUALIZATION:</strong> Windows Server & Active Directory / Group Policy (operational) | Linux fundamentals | Patching & lifecycle maintenance | Virtualization: Proxmox, VMware</li>
-  <li><strong>CLOUD, PLATFORM & AUTOMATION:</strong> AWS (EC2, S3, IAM, VPC, CloudWatch, Lambda, Route 53) | Terraform (IaC) | GitHub Actions (CI/CD) | Docker | Bash & Python scripting | Azure fundamentals</li>
-  <li><strong>SECURITY & TOOLING:</strong> Log analysis | Alert investigation | Runbook-driven workflows | SIEM/EDR concepts | MITRE ATT&CK awareness | Python | Bash | SQL | Git</li>
+  <li><strong>CLOUD & IaC:</strong> AWS (EC2, S3, IAM, VPC, CloudFront, ACM, Route 53, Lambda, API Gateway, DynamoDB, CloudWatch, Budgets) | Terraform | GitHub Actions (CI/CD) | Git | Docker | Python | Bash | SQL | Azure Administration (coursework)</li>
+  <li><strong>SECURITY & GOVERNANCE:</strong> IAM policies, least privilege | Active Directory / Group Policy | System hardening & patching | Network segmentation | VPN/IPSec | SIEM/EDR concepts | MITRE ATT&CK awareness</li>
+  <li><strong>MONITORING, INCIDENT RESPONSE & OPERATIONS:</strong> P1 incident ownership | Alarm triage | Vendor TAC management | Escalation handling | Root-cause analysis | SOPs, MOPs, runbooks, DR | Ticketing platforms | CloudWatch, AWS Budgets alarms</li>
+  <li><strong>NETWORK & OPTICAL:</strong> Optical troubleshooting (OTDR, optical power levels, fault isolation) | Ciena | Infinera | Cisco | Juniper | MikroTik | TCP/IP, VLANs, routing (OSPF, BGP), NAT, DNS, DHCP | Wireshark</li>
+  <li><strong>SYSTEMS & VIRTUALIZATION:</strong> Windows Server | Linux | Proxmox VE | VMware</li>
   </ul>
 </div>
+
+    <div class="section">
+      <h2>Projects</h2>
+
+      <h3>Serverless Multiplayer Backend</h3>
+      <ul>
+        <li>Built and deployed a WebSocket matchmaking and signaling backend on AWS with API Gateway, Python Lambda, and DynamoDB, defined in modular Terraform.</li>
+        <li>Added a Lambda authorizer, a custom domain (ACM certificate and Route 53), CloudWatch logging, and an AWS Budgets alert ($5/month).</li>
+        <li>Debugged live least-privilege IAM and API Gateway permission failures and resolved a Terraform module dependency cycle while bringing the stack up.</li>
+        <li>Documented the message protocol and API schema, and wrote a smoke test and demo client that ran against the live deployment.</li>
+      </ul>
+
+      <h3><a href="https://github.com/drakepwj/aws-terraform-resume-website">Cloud-Hosted Resume Website</a></h3>
+      <ul>
+        <li>Provisioned full-stack AWS infrastructure with Terraform: a private S3 bucket behind CloudFront (Origin Access Control), an ACM TLS certificate, and Route 53 DNS.</li>
+        <li>Built a serverless visitor counter (Python Lambda, HTTP API Gateway, DynamoDB) with an IAM role limited to a single table.</li>
+        <li>Configured GitHub Actions workflows to deploy site changes to S3 and Lambda code on push.</li>
+      </ul>
+
+      <h3>Identity Service (designed and validated locally; not deployed)</h3>
+      <ul>
+        <li>Wrote a serverless login service on Lambda, API Gateway, and DynamoDB with JWKS-signed tokens, guest login, and magic-link email login, plus Terraform.</li>
+        <li>Kept the token-signing key out of code and Terraform state, stored as an SSM Parameter Store SecureString.</li>
+      </ul>
+    </div>
+
     <div class="section">
       <h2>Education</h2>
       <p>
@@ -71,16 +97,28 @@
     <div class="section">
       <h2>Work Experience</h2>
 
-      <h3>Network Engineer, PCS Technologies</h3>
+      <h3>Network Operations Engineer II, Astreya</h3>
+      <p>07/2026 – Present | Denver, CO (on-site)</p>
+      <ul>
+        <li>Serve as an escalation point in a 24x7 NOC supporting a hyperscale client's global fiber backbone.</li>
+        <li>Own incidents from detection through diagnosis and dispatch, including P1 service-impacting events, as the sole P1 owner on Saturday shifts.</li>
+        <li>Troubleshoot fiber cuts, degraded links, and bad optics on Ciena, Infinera, Cisco, and Juniper equipment using optical power readings, alarms, and OTDR testing.</li>
+        <li>Manage vendor TAC cases and coordinate field and data center technicians through repairs, taking non-P1 dispatches through to ticket closure.</li>
+        <li>Handle escalations from junior engineers and train newer hires (5+ to date).</li>
+      </ul>
+
+      <h3>Network &amp; Systems Engineer, PCS Technologies</h3>
       <p>10/2018 – 04/2025 | West Saint Paul, MN</p>
       <ul>
         <li>Supported enterprise and distributed infrastructure across 150+ remote sites, ensuring stable, secure, and high-performing operations for mission-critical systems.</li>
         <li>Operated and maintained servers, network devices, and distributed client/server systems across multi-site environments.</li>
         <li>Administered Windows systems, AD/GPO, and endpoint configurations to support secure, consistent operations.</li>
+        <li>Handled Microsoft 365 licensing (Office 365, Teams).</li>
         <li>Monitored system and network health, responded to alerts, and executed structured incident triage to prevent or mitigate outages.</li>
         <li>Performed packet-level diagnostics, VPN/IPSec troubleshooting, and Layer 1–3 analysis during high-impact incidents.</li>
         <li>Applied configuration updates, firmware patches, and system changes across servers and network infrastructure.</li>
         <li>Identified performance bottlenecks and implemented optimizations to improve system reliability and resource utilization.</li>
+        <li>Created and maintained SOPs, MOPs, network diagrams, DR materials, and infrastructure documentation.</li>
         <li>Collaborated with engineering teams, ISPs, vendors, and programmers to validate changes and ensure accurate implementation.</li>
       </ul>
 
