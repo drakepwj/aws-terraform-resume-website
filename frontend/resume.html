@@ -16,56 +16,88 @@
       <a href="https://github.com/drakepwj">GitHub Projects</a>
     </p>
 
-   <div class="section">
-  <h2>Profile</h2>
-  <p>
-    Cloud and infrastructure engineer with 10+ years in IT operations, currently owning P1 incidents on a hyperscale global fiber backbone. AWS-certified (Developer, SysOps Administrator, Solutions Architect Associate) with a B.S. in Cloud Computing and hands-on Terraform and GitHub Actions CI/CD experience from personal projects. Background in identity and access management, system hardening, monitoring, and operational documentation across 150+ distributed sites.
-  </p>
-</div>
-
-<div class="section">
-  <h2>Skills</h2>
-  <ul>
-  <li><strong>CLOUD & IaC:</strong> AWS (EC2, S3, IAM, VPC, CloudFront, ACM, Route 53, Lambda, API Gateway, DynamoDB, CloudWatch, Budgets) | Terraform | GitHub Actions (CI/CD) | Git | Docker | Python | Bash | SQL | Azure Administration (coursework)</li>
-  <li><strong>SECURITY & GOVERNANCE:</strong> IAM policies, least privilege | Active Directory / Group Policy | System hardening & patching | Network segmentation | VPN/IPSec | SIEM/EDR concepts | MITRE ATT&CK awareness</li>
-  <li><strong>MONITORING, INCIDENT RESPONSE & OPERATIONS:</strong> P1 incident ownership | Alarm triage | Vendor TAC management | Escalation handling | Root-cause analysis | SOPs, MOPs, runbooks, DR | Ticketing platforms | CloudWatch, AWS Budgets alarms</li>
-  <li><strong>NETWORK & OPTICAL:</strong> Optical troubleshooting (OTDR, optical power levels, fault isolation) | Ciena | Infinera | Cisco | Juniper | MikroTik | TCP/IP, VLANs, routing (OSPF, BGP), NAT, DNS, DHCP | Wireshark</li>
-  <li><strong>SYSTEMS & VIRTUALIZATION:</strong> Windows Server | Linux | Proxmox VE | VMware</li>
-  </ul>
-</div>
+    <div class="section">
+      <h2>Profile</h2>
+      <p>
+        Cloud and infrastructure engineer with 10+ years in IT operations. Currently own P1 incidents in a 24x7 NOC for a hyperscale client's global fiber backbone. Previously a network and systems engineer: administered Windows and Linux servers and Active Directory, handled backup and disaster recovery, and was the customer escalation point for 150+ wireless tower sites, from provisioning equipment to on-site and remote troubleshooting. AWS-certified (Solutions Architect, SysOps Administrator, Developer – Associate) with a B.S. in Cloud Computing. Hands-on with AWS infrastructure as code: Terraform, GitHub Actions CI/CD, and serverless (Lambda, API Gateway, DynamoDB).
+      </p>
+    </div>
 
     <div class="section">
-      <h2>Projects</h2>
-
-      <h3>Serverless Multiplayer Backend</h3>
+      <h2>Skills</h2>
       <ul>
-        <li>Built and deployed a WebSocket matchmaking and signaling backend on AWS with API Gateway, Python Lambda, and DynamoDB, defined in modular Terraform.</li>
-        <li>Added a Lambda authorizer, a custom domain (ACM certificate and Route 53), CloudWatch logging, and an AWS Budgets alert ($5/month).</li>
-        <li>Debugged live least-privilege IAM and API Gateway permission failures and resolved a Terraform module dependency cycle while bringing the stack up.</li>
-        <li>Documented the message protocol and API schema, and wrote a smoke test and demo client that ran against the live deployment.</li>
-      </ul>
-
-      <h3><a href="https://github.com/drakepwj/aws-terraform-resume-website">Cloud-Hosted Resume Website</a></h3>
-      <ul>
-        <li>Provisioned full-stack AWS infrastructure with Terraform: a private S3 bucket behind CloudFront (Origin Access Control), an ACM TLS certificate, and Route 53 DNS.</li>
-        <li>Built a serverless visitor counter (Python Lambda, HTTP API Gateway, DynamoDB) with an IAM role limited to a single table.</li>
-        <li>Configured GitHub Actions workflows to deploy site changes to S3 and Lambda code on push.</li>
-      </ul>
-
-      <h3>Identity Service (designed and validated locally; not deployed)</h3>
-      <ul>
-        <li>Wrote a serverless login service on Lambda, API Gateway, and DynamoDB with JWKS-signed tokens, guest login, and magic-link email login, plus Terraform.</li>
-        <li>Kept the token-signing key out of code and Terraform state, stored as an SSM Parameter Store SecureString.</li>
+        <li><strong>CLOUD (AWS):</strong> EC2, VPC, IAM, S3, CloudFront, ACM, Route 53, Lambda, API Gateway (HTTP and WebSocket), DynamoDB, CloudWatch, SNS | IAM policies and least privilege, network segmentation | AWS Budgets alerts and CloudWatch alarms for cost control | Azure (coursework)</li>
+        <li><strong>NETWORKING:</strong> TCP/IP, VLANs, routing, NAT, DNS, DHCP, VPN/IPSec, Wireshark | Optical troubleshooting: OTDR, power levels, fault isolation | Ciena, Infinera, Cisco, Juniper, MikroTik</li>
+        <li><strong>MONITORING, INCIDENT RESPONSE &amp; OPERATIONS:</strong> P1 incident ownership, alarm triage, escalation handling, root-cause analysis | Vendor TAC management | 24x7 on-call and customer escalation | Backup and disaster recovery | Runbooks, SOPs, MOPs</li>
+        <li><strong>SYSTEMS &amp; SCRIPTING:</strong> Windows and Linux servers, Active Directory, Group Policy | Proxmox VE (VM provisioning, storage pools, snapshots) | Python, Bash, Docker (multi-container deployment)</li>
+        <li><strong>INFRASTRUCTURE AS CODE &amp; CI/CD:</strong> Terraform for repeatable, automated infrastructure provisioning | GitHub Actions deployment pipelines | Git version control and collaborative development workflows | YAML configuration and environment provisioning</li>
       </ul>
     </div>
 
     <div class="section">
-      <h2>Education</h2>
-      <p>
-        Bachelor of Science in Cloud Computing, Western Governors University<br />
-        04/2025 | Remote<br />
-        <em>AWS Track: Focused on cloud architecture, infrastructure as code, DevOps automation, and security best practices</em>
-      </p>
+      <h2>Work Experience</h2>
+
+      <h3>Network Operations Engineer II, Astreya</h3>
+      <p>07/2026 – Present | Denver, CO</p>
+      <ul>
+        <li>Escalation point in a 24x7 NOC supporting a hyperscale client's global fiber backbone.</li>
+        <li>Own incidents from detection through diagnosis and dispatch, including P1 service-impacting events, as the sole P1 owner on Saturday shifts.</li>
+        <li>Troubleshoot fiber cuts, degraded links, and bad optics on Ciena, Infinera, Cisco, and Juniper equipment using optical power readings, alarms, and OTDR testing.</li>
+        <li>Manage vendor TAC cases and coordinate field and data center technicians through repairs, taking non-P1 dispatches through to ticket closure.</li>
+        <li>Handle escalations from and mentor junior engineers.</li>
+      </ul>
+
+      <h3>Network &amp; Systems Engineer, PCS Technologies</h3>
+      <p>10/2018 – 04/2025 | West Saint Paul, MN</p>
+      <ul>
+        <li>Administered Windows and Linux servers, Active Directory, Group Policy, DNS, and DHCP.</li>
+        <li>Customer escalation point for 150+ wireless tower sites; remote and on-site troubleshooting with 24x7 on-call.</li>
+        <li>Provisioned and installed LTE eNodeBs (Telrad/Blinq) and Ceragon backhaul radios.</li>
+        <li>Performed Tier 2/3 troubleshooting across OS, network, and application layers, including packet-level diagnostics and VPN/IPSec issues.</li>
+        <li>Performed backups and disaster recovery restores; maintained DR documentation.</li>
+        <li>Managed Proxmox VE virtualization: VM provisioning, storage pools, snapshots.</li>
+        <li>Executed patching, firmware updates, configuration changes, and system hardening.</li>
+        <li>Monitored system and network health and triaged alerts to limit outages.</li>
+        <li>Created and maintained SOPs, MOPs, and network diagrams.</li>
+      </ul>
+
+      <h3>IT Field Support Technician, Onsite Technology Services</h3>
+      <p>03/2018 – 09/2018 | Chanhassen, MN</p>
+      <ul>
+        <li>Deployed and configured network hardware, POS systems, and infrastructure; executed upgrades and cutovers following structured procedures.</li>
+      </ul>
+
+      <h3>Printer Technician, Compucom</h3>
+      <p>05/2017 – 02/2018 | Minneapolis, MN</p>
+      <ul>
+        <li>Diagnosed, repaired, and installed enterprise printers in networked environments.</li>
+      </ul>
+
+      <h3>IT Technician, Cardinal IG</h3>
+      <p>10/2015 – 02/2017 | Fargo, ND</p>
+      <ul>
+        <li>Installed and maintained Windows-based systems in a production environment, including backups and recovery.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Projects</h2>
+
+      <h3><a href="https://github.com/drakepwj/aws-terraform-resume-website">Cloud-Hosted Resume Website</a></h3>
+      <ul>
+        <li>Provisioned on AWS with Terraform: private S3 bucket behind CloudFront (OAC), ACM certificate, and Route 53 DNS.</li>
+        <li>Serverless visitor counter (Lambda, API Gateway, DynamoDB) with a single-table IAM role and domain-restricted CORS.</li>
+        <li>Deployed site and Lambda changes with GitHub Actions on push.</li>
+        <li>Migrated to a new domain via a parallel stack; Terraform state in a versioned, encrypted S3 backend with locking.</li>
+      </ul>
+
+      <h3>Serverless Multiplayer Backend</h3>
+      <ul>
+        <li>Built a WebSocket matchmaking backend on AWS (API Gateway, Python Lambda, DynamoDB) in modular Terraform.</li>
+        <li>Added a Lambda authorizer, custom domain (ACM, Route 53), CloudWatch logging, and AWS Budgets alerts.</li>
+        <li>Debugged live least-privilege IAM and API Gateway permission failures; resolved a Terraform module dependency cycle.</li>
+        <li>Documented the protocol and API schema; wrote a smoke test and demo client run against the live deployment.</li>
+      </ul>
     </div>
 
     <div class="section">
@@ -95,57 +127,12 @@
     </div>
 
     <div class="section">
-      <h2>Work Experience</h2>
-
-      <h3>Network Operations Engineer II, Astreya</h3>
-      <p>07/2026 – Present | Denver, CO (on-site)</p>
-      <ul>
-        <li>Serve as an escalation point in a 24x7 NOC supporting a hyperscale client's global fiber backbone.</li>
-        <li>Own incidents from detection through diagnosis and dispatch, including P1 service-impacting events, as the sole P1 owner on Saturday shifts.</li>
-        <li>Troubleshoot fiber cuts, degraded links, and bad optics on Ciena, Infinera, Cisco, and Juniper equipment using optical power readings, alarms, and OTDR testing.</li>
-        <li>Manage vendor TAC cases and coordinate field and data center technicians through repairs, taking non-P1 dispatches through to ticket closure.</li>
-        <li>Handle escalations from junior engineers and train newer hires (5+ to date).</li>
-      </ul>
-
-      <h3>Network &amp; Systems Engineer, PCS Technologies</h3>
-      <p>10/2018 – 04/2025 | West Saint Paul, MN</p>
-      <ul>
-        <li>Supported enterprise and distributed infrastructure across 150+ remote sites, ensuring stable, secure, and high-performing operations for mission-critical systems.</li>
-        <li>Operated and maintained servers, network devices, and distributed client/server systems across multi-site environments.</li>
-        <li>Administered Windows systems, AD/GPO, and endpoint configurations to support secure, consistent operations.</li>
-        <li>Handled Microsoft 365 licensing (Office 365, Teams).</li>
-        <li>Monitored system and network health, responded to alerts, and executed structured incident triage to prevent or mitigate outages.</li>
-        <li>Performed packet-level diagnostics, VPN/IPSec troubleshooting, and Layer 1–3 analysis during high-impact incidents.</li>
-        <li>Applied configuration updates, firmware patches, and system changes across servers and network infrastructure.</li>
-        <li>Identified performance bottlenecks and implemented optimizations to improve system reliability and resource utilization.</li>
-        <li>Created and maintained SOPs, MOPs, network diagrams, DR materials, and infrastructure documentation.</li>
-        <li>Collaborated with engineering teams, ISPs, vendors, and programmers to validate changes and ensure accurate implementation.</li>
-      </ul>
-
-      <h3>IT Field Support Technician, Onsite Technology Services</h3>
-      <p>03/2018 – 09/2018 | Chanhassen, MN</p>
-      <ul>
-        <li>Deployed and configured network hardware, POS systems, and infrastructure components across customer sites.</li>
-        <li>Executed upgrades and cutovers following structured procedures and project plans.</li>
-        <li>Documented activities and escalated issues to ensure timely resolution and deployment quality.</li>
-      </ul>
-
-      <h3>Printer Technician, Compucom</h3>
-      <p>05/2017 – 02/2018 | Minneapolis, MN</p>
-      <ul>
-        <li>Diagnosed and resolved hardware issues in desktop and standalone printers, including component repair and replacement.</li>
-        <li>Installed, configured, and tested printers to ensure seamless integration with existing systems and optimal performance.</li>
-        <li>Oversaw inventory of printer consumables, coordinating timely resupply and maintaining accurate stock levels to support uninterrupted operations.</li>
-      </ul>
-
-      <h3>IT Technician, Cardinal IG</h3>
-      <p>10/2015 – 02/2017 | Fargo, ND</p>
-      <ul>
-        <li>Installed, configured, and updated Windows-based computer systems and hardware to maintain reliable workstation performance in a production environment.</li>
-        <li>Troubleshot connectivity, device, and system issues across printers, scanners, and user workstations, ensuring minimal downtime for manufacturing operations.</li>
-        <li>Performed routine system backups and recovery tasks for DOS, Windows XP, and Windows 7 environments to support data integrity and business continuity.</li>
-        <li>Created work orders, documented technical tasks, and maintained accurate inventory records to support operational planning and equipment lifecycle management.</li>
-      </ul>
+      <h2>Education</h2>
+      <p>
+        Bachelor of Science in Cloud Computing, Western Governors University<br />
+        04/2025 | Remote<br />
+        <em>Focus: AWS cloud architecture, IaC, DevOps automation, security best practices</em>
+      </p>
     </div>
 
     <div class="section">

@@ -9,8 +9,12 @@ terraform {
   }
 }
 
+locals {
+  suffix = var.name_suffix == "" ? "" : "-${var.name_suffix}"
+}
+
 resource "aws_dynamodb_table" "visitor_count" {
-  name         = "VisitorCountTable"
+  name         = "VisitorCountTable${local.suffix}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "id"
 
@@ -27,7 +31,7 @@ data "archive_file" "lambda_zip" {
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name = "visitor-counter-lambda-role"
+  name = "visitor-counter-lambda-role${local.suffix}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -69,7 +73,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
 }
 
 resource "aws_lambda_function" "visitor_counter" {
-  function_name = "VisitorCounterFunction"
+  function_name = "VisitorCounterFunction${local.suffix}"
   role          = aws_iam_role.lambda_role.arn
   handler       = "app.lambda_handler"
   runtime       = "python3.11"
@@ -84,7 +88,7 @@ resource "aws_lambda_function" "visitor_counter" {
 }
 
 resource "aws_apigatewayv2_api" "http_api" {
-  name          = "visitor-counter-api"
+  name          = "visitor-counter-api${local.suffix}"
   protocol_type = "HTTP"
   cors_configuration {
     allow_origins = ["https://${var.domain}"]

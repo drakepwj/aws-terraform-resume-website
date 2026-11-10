@@ -68,9 +68,30 @@ Do this:
 
 ---
 
+## Remote state (one-time)
+
+Terraform state lives in a versioned, encrypted S3 bucket, not on a laptop, so it survives a reinstall
+and gets a history of every change. The bucket is created once, outside Terraform (Terraform cannot
+create the bucket that stores its own state):
+
+```
+aws s3api create-bucket --bucket <state-bucket> --region <region> \
+  --create-bucket-configuration LocationConstraint=<region>   # omit this flag in us-east-1
+aws s3api put-bucket-versioning --bucket <state-bucket> --versioning-configuration Status=Enabled
+aws s3api put-bucket-encryption --bucket <state-bucket> \
+  --server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'
+aws s3api put-public-access-block --bucket <state-bucket> \
+  --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
+```
+
+Then copy backend.hcl.example → backend.hcl (gitignored) and set the bucket name and region. Locking uses
+S3's native lockfile (Terraform 1.10+), so no DynamoDB lock table is needed.
+
+---
+
 ## 2. Configure Your Variables
 
-Copy variables.tf.example → variables.tf and fill in:
+Copy shared.auto.tfvars.example → shared.auto.tfvars (gitignored) and fill in:
 
 `region = "<your-aws-region>"`
 
@@ -87,7 +108,8 @@ CloudFront, OAC, and ACM are global services but must be deployed in us-east-1. 
 
 Run:
 
-terraform init
+terraform init -backend-config=backend.hcl
+terraform plan
 terraform apply
 
 Terraform will create all frontend and backend resources. It will use AWS CLI to copy resume.html, style.css, and counter.js to the S# bucket. It will also push the API URL, region, and domain name to their respective files for GitHub Actions.

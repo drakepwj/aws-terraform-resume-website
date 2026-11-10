@@ -1,3 +1,6 @@
 region         = "<your-aws-region>"
 domain         = "<your-domain>"
 hosted_zone_id = "<your-hosted-zone-id>"
+
+# Optional. Set (e.g. "v2") to run next to an existing copy of the stack in the same account/region.
+# name_suffix  = "v2"

@@ -23,7 +23,7 @@ jobs:
           args: "--delete --exact-timestamps --exclude '*' --include 'resume.html' --include 'style.css'"
 
         env:
-          AWS_S3_BUCKET: resume-drakepwj.click
+          AWS_S3_BUCKET: resume-drakepwj.dev
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-west-2
@@ -32,7 +32,7 @@ jobs:
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ETBAFHJGA5OFC \
+            --distribution-id E1V7QU4S9HRBDC \
             --paths "/*"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

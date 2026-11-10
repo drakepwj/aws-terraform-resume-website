@@ -1,5 +1,6 @@
 # Ignore personal Terraform variable files
 shared.auto.tfvars
+backend.hcl
 
 # Ignore Terraform working directories
 .terraform/

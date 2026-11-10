@@ -32,14 +32,14 @@ resource "aws_s3_bucket_public_access_block" "site_bucket" {
 
 # Origin Access Control for CloudFront → S3
 resource "aws_cloudfront_origin_access_control" "oac" {
-  name                              = "resume-oac"
+  name                              = "resume-oac-${replace(var.domain, ".", "-")}"
   description                       = "OAC for resume site"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
 
-# ACM certificate for drakepwj.click (in us-east-1)
+# ACM certificate for the site domain (in us-east-1)
 resource "aws_acm_certificate" "cert" {
   provider          = aws.us_east_1
   domain_name       = var.domain
@@ -160,7 +160,8 @@ resource "null_resource" "update_workflow" {
     always = timestamp()
   }
   provisioner "local-exec" {
-    command = <<EOT
+    interpreter = ["bash", "-c"]
+    command     = <<EOT
       sed -i 's|AWS_S3_BUCKET:.*|AWS_S3_BUCKET: resume-${var.domain}|' ${path.module}/../.github/workflows/deploy-frontend.yml
       sed -i 's|AWS_REGION:.*|AWS_REGION: ${var.region}|g' ${path.module}/../.github/workflows/deploy-frontend.yml
       sed -i 's|--distribution-id [A-Z0-9]*|--distribution-id ${aws_cloudfront_distribution.cdn.id}|' ${path.module}/../.github/workflows/deploy-frontend.yml

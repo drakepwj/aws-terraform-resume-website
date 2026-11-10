@@ -9,3 +9,8 @@ variable "domain" {
 variable "hosted_zone_id" {
   type = string
 }
+
+variable "name_suffix" {
+  type    = string
+  default = ""
+}

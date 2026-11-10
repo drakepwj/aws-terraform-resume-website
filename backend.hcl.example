@@ -1,0 +1,7 @@
+# Copy to backend.hcl (gitignored) and fill in, then:  terraform init -backend-config=backend.hcl
+# The bucket must already exist, with versioning enabled. See "Remote state" in README.md.
+bucket       = "<your-terraform-state-bucket>"
+key          = "resume-website/terraform.tfstate"
+region       = "<your-aws-region>"
+encrypt      = true
+use_lockfile = true
